@@ -1,5 +1,5 @@
 package main
-// https://leetcode-cn.com/problems/binary-tree-preorder-traversal/
+// https://leetcode-cn.com/problems/binary-tree-postorder-traversal/
 
 type TreeNode struct {
 	Val int
@@ -7,7 +7,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-func preorderTraversal(root *TreeNode) []int {
+func postorderTraversal(root *TreeNode) []int {
 	res := []int{}
 	stack := []*TreeNode{}
 	p := root
@@ -16,7 +16,6 @@ func preorderTraversal(root *TreeNode) []int {
 			if p == nil {
 				break
 			}
-			res = append(res, p.Val)
 			stack = append(stack, p)
 			p = p.Left
 		}
@@ -26,7 +25,6 @@ func preorderTraversal(root *TreeNode) []int {
 		}
 		node := stack[size-1]
 		stack = stack[:size-1]
-		p = node.Right
 	}
 	return res
 }
