@@ -33,6 +33,7 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
+  `sex` varchar(2) DEFAULT NULL,
   `age` int(2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
