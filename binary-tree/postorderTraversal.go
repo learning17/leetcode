@@ -8,28 +8,23 @@ type TreeNode struct {
 }
 
 func postorderTraversal(root *TreeNode) []int {
-	res := []int{}
-	stack := []*TreeNode{}
-	p := root
-	for {
-		for {
-			if p == nil {
-				break
-			}
-			res = append(res, p.Val)
-			stack = append(stack, p)
-			p = p.Right
+	res, stack := []int{}, []*TreeNode{}
+	var pre *TreeNode
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
 		}
-		size := len(stack)
-		if size == 0 {
-			break
+		root = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		if root.Right == nil || root.Right == pre {
+			res = append(res, root.Val)
+			pre = root
+			root = nil
+		} else {
+			stack = append(stack, root)
+			root = root.Right
 		}
-		node := stack[size-1]
-		stack = stack[:size-1]
-		p = node.Left
-	}
-	for i, j := 0, len(res)-1; i < j; i, j = i+1, j -1 {
-		res[i], res[j] = res[j],res[i]
 	}
 	return res
 }
