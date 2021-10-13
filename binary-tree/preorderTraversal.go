@@ -8,25 +8,15 @@ type TreeNode struct {
 }
 
 func preorderTraversal(root *TreeNode) []int {
-	res := []int{}
-	stack := []*TreeNode{}
-	p := root
-	for {
-		for {
-			if p == nil {
-				break
-			}
-			res = append(res, p.Val)
-			stack = append(stack, p)
-			p = p.Left
+	res, stack := []int{}, []*TreeNode{}
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			res = append(res, root.Val)
+			stack = append(stack, root)
+			root = root.Left
 		}
-		size := len(stack)
-		if size == 0 {
-			break
-		}
-		node := stack[size-1]
-		stack = stack[:size-1]
-		p = node.Right
+		root = stack[len(stack)-1].Right
+		stack = stack[:len(stack)-1]
 	}
 	return res
 }
