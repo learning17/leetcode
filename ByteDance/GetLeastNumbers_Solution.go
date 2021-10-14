@@ -15,28 +15,15 @@ func GetLeastNumbers_Solution( input []int ,  k int ) []int {
 }
 
 func adjust(arr []int, i, size int) {
-	for {
-		left, right := 2*i+1, 2*i+2
-		if left >= size {
-			break
+	for k := 2*i+1; k < size; k = 2*k+1 {
+		if k+1 < size && arr[k] < arr[k+1] {
+			k++
 		}
-		if right >= size {
-			if arr[left] < arr[i] {
-				break
-			}
-			arr[left], arr[i] = arr[i], arr[left]
-			i = left
+		if arr[i] < arr[k] {
+			arr[i], arr[k] = arr[k], arr[i]
+			i = k
 		} else {
-			if arr[left] <= arr[i] && arr[right] <= arr[i] {
-				break
-			}
-			if arr[left] > arr[right] {
-				arr[left], arr[i] = arr[i], arr[left]
-				i = left
-			} else {
-				arr[right], arr[i] = arr[i], arr[right]
-				i = right
-			}
+			break
 		}
 	}
 }
