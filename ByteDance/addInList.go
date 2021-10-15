@@ -7,46 +7,38 @@ type ListNode struct{
 }
 
 func addInList( head1 *ListNode ,  head2 *ListNode ) *ListNode {
-	stack1, stack2 := []int{}, []int{}
-	for ;head1 != nil; head1 = head1.Next {
-		stack1 = append(stack1, head1.Val)
-	}
-	for ;head2 != nil; head2 = head2.Next {
-		stack2 = append(stack2, head2.Val)
-	}
-	arr := []int{}
+	head1, head2 = reverse(head1), reverse(head2)
+	node1, node2 := head1, head2
+	pre1 := head1
 	bit := 0
-	for len(stack1) > 0 && len(stack2) > 0 {
-		num1, num2 := stack1[len(stack1)-1], stack2[len(stack2)-1]
-		stack1, stack2 = stack1[:len(stack1)-1], stack2[:len(stack2)-1]
-		ans := num1 + num2 + bit
-		bit = ans / 10
-		arr = append(arr, ans%10)
+	for ;node1 != nil && node2 != nil; pre1, node1, node2 = node1,node1.Next, node2.Next {
+		value := node1.Val + node2.Val + bit
+		node1.Val, bit = value%10, value/10
 	}
-	for len(stack1) > 0 {
-		num1 := stack1[len(stack1)-1]
-		stack1 = stack1[:len(stack1)-1]
-		ans := num1 + bit
-		bit = ans / 10
-		arr = append(arr, ans%10)
+	if node1 == nil {
+		pre1.Next, node1 = node2, node2
 	}
-	for len(stack2) > 0 {
-		num2 := stack2[len(stack2)-1]
-		stack2 = stack2[:len(stack2)-1]
-		ans := num2 + bit
-		bit = ans / 10
-		arr = append(arr, ans%10)
-	}
-	if bit != 0 {
-		arr = append(arr, bit)
-	}
-	root := &ListNode{}
-	node := root
-	for i := len(arr)-1; i >= 0; i-- {
-		node.Next = &ListNode{
-			Val: arr[i],
+	for ;node1 != nil; node1 = node1.Next {
+		if bit == 0 {
+			break
 		}
-		node = node.Next
+		value := node1.Val + bit
+		node1.Val, bit = value%10, value/10
 	}
-	return root.Next
+	head1 = reverse(head1)
+	if bit != 0 {
+		head1 = &ListNode{
+			Val: bit,
+			Next: head1,
+		}
+	}
+	return head1
+}
+
+func reverse(head *ListNode) *ListNode {
+	var pre, cur *ListNode
+	for pre, cur = nil, head; cur != nil; {
+		pre, cur, cur.Next = cur, cur.Next, pre
+	}
+	return pre
 }
