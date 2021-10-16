@@ -6,20 +6,17 @@ func maxWater( arr []int ) int64 {
 	if size < 3 {
 		return 0
 	}
-	left := make([]int, size)
-	right := make([]int, size)
-	left[0], right[size-1] = arr[0], arr[size-1]
-	for i := 0; i < size; i++ {
-		if i > 0 {
-			left[i] = max(left[i-1], arr[i])
-		}
-		if i < size-1 {
-			right[size-2-i] = max(right[size-1-i], arr[size-2-i])
-		}
-	}
+	leftMax, rightMax := arr[0], arr[size-1]
 	sum := 0
-	for i := 0; i < size; i++ {
-		sum += min(left[i], right[i]) - arr[i]
+	for left, right := 1, size-2; left <= right; {
+		leftMax, rightMax = max(leftMax, arr[left]), max(rightMax, arr[right])
+		if leftMax < rightMax {
+			sum += leftMax - arr[left]
+			left++
+		} else {
+			sum += rightMax - arr[right]
+			right--
+		}
 	}
 	return int64(sum)
 }
@@ -31,9 +28,3 @@ func max(a, b int) int {
 	return b
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
