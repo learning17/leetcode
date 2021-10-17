@@ -2,8 +2,8 @@ package main
 // https://www.nowcoder.com/practice/fd711bdfa0e840b381d7e1b82183b3ee
 
 import (
-	"sort"
 	"strconv"
+	"fmt"
 )
 
 func topKstrings( strings []string ,  k int ) [][]string {
@@ -11,27 +11,49 @@ func topKstrings( strings []string ,  k int ) [][]string {
 	for _, s := range strings {
 		dict[s]++
 	}
-	type node struct {
-		key string
-		value int
+	arr := make([][]string, 0, len(dict))
+	for s, v := range dict {
+		arr = append(arr, []string{s, strconv.Itoa(v)})
 	}
-	arr := make([]node, 0, len(dict))
-	for k, v := range dict {
-		arr = append(arr, node{k,v})
+	for j := (k-2)/2; j >= 0; j-- {
+		adjust(arr, j, k)
 	}
-	help := func(n1, n2 node) bool {
-		if n1.value > n2.value {
-			return true
+
+	for j := k; j < len(arr); j++ {
+		if cmp(arr[j], arr[0]) {
+			continue
 		}
-		if n1.value == n2.value && n1.key < n2.key {
-			return true
-		}
-		return false
+		arr[0] = arr[j]
+		adjust(arr, 0, k)
 	}
-	sort.Slice(arr, func(i,j int) bool {return help(arr[i], arr[j])})
-	ans := [][]string{}
-	for i := 0; i < k; i++ {
-		ans = append(ans, []string{arr[i].key, strconv.Itoa(arr[i].value)})
+	ans := make([][]string, k)
+	for i := k-1; i >= 0; i-- {
+		ans[i] = arr[0]
+		arr[0] = arr[i]
+		adjust(arr, 0, i)
 	}
 	return ans
+}
+
+func cmp(node1, node2 []string) bool {
+	intV1, _ := strconv.Atoi(node1[1])
+	intV2, _ := strconv.Atoi(node2[1])
+	if intV1 < intV2 {
+		return true
+	}
+	if intV1 > intV2 {
+		return false
+	}
+	return node1[0] > node2[0]
+}
+func adjust(arr [][]string, k, size int) {
+	for i := 2*k+1; i < size; k, i = i, 2*i+1 {
+		if i + 1 < size && !cmp(arr[i], arr[i+1]) {
+			i++
+		}
+		if cmp(arr[k], arr[i]) {
+			break
+		}
+		arr[k], arr[i] = arr[i], arr[k]
+	}
 }
