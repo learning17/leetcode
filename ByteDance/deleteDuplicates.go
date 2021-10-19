@@ -7,24 +7,24 @@ type ListNode struct{
 }
 
 func deleteDuplicates( head *ListNode ) *ListNode {
-    if head == nil {
-        return nil
-    }
-    var pre, cur *ListNode
-    for pre, cur = nil, head; cur != nil && cur.Next != nil; {
-        if cur.Val != cur.Next.Val {
-            pre, cur = cur, cur.Next
-        } else {
-            point := cur
-            for ;point != nil && point.Val == cur.Val; point = point.Next{
-            }
-            if pre != nil {
-                pre.Next = point
-            } else {
-                head = point
-            }
-            cur = point
-        }
-    }
-    return head
+	if head == nil || head.Next == nil {
+		return head
+	}
+	var pre, cur *ListNode
+	pre, cur = nil, head
+	for cur != nil && cur.Next != nil {
+		if cur.Val != cur.Next.Val {
+			pre, cur = cur, cur.Next
+		} else {
+			point := cur
+			for ;cur != nil && cur.Val == point.Val; cur = cur.Next{
+			}
+			if pre != nil {
+				pre.Next = cur
+			} else {
+				head = cur
+			}
+		}
+	}
+	return head
 }
