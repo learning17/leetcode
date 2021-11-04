@@ -1,82 +1,59 @@
 package main
-
 // https://leetcode-cn.com/problems/lru-cache/
+import (
+	"container/list"
+)
+
+
+type Node struct {
+	Key int
+	Val int
+}
 
 type LRUCache struct {
 	capacity int
 	size int
-	head *LinkNode
-	tail *LinkNode
-	dict map[int]*LinkNode
+	list *list.List
+	dict map[int]*list.Element
 }
 
-type LinkNode struct {
-	key int
-	value int
-	prev *LinkNode
-	next *LinkNode
-}
 
 func Constructor(capacity int) LRUCache {
-	return LRUCache{
+	return LRUCache {
 		capacity: capacity,
-		dict: make(map[int]*LinkNode),
+		list: list.New(),
+		dict: make(map[int]*list.Element),
 	}
 }
 
 
 func (this *LRUCache) Get(key int) int {
-	node, ok := this.dict[key]
+	e, ok := this.dict[key]
 	if !ok {
 		return -1
 	}
-	this.move(node)
-	return node.value
+	this.list.MoveToFront(e)
+	node, _ := e.Value.(*Node)
+	return node.Val 
 }
 
-func (this *LRUCache) move(node *LinkNode) {
-	if node == this.tail {
-		return
-	}
-	if node == this.head {
-		this.head = node.next
-	}
-	if node.prev != nil {
-		node.prev.next = node.next
-	}
-	if node.next != nil {
-		node.next.prev = node.prev
-	}
-	node.prev,node.next, this.tail.next = this.tail, nil, node
-	this.tail = node
-}
 
 func (this *LRUCache) Put(key int, value int)  {
-	node, ok := this.dict[key]
+	e, ok := this.dict[key]
 	if ok {
-		this.move(node)
-		node.value = value
+		node, _ := e.Value.(*Node)
+		node.Val = value
+		this.list.MoveToFront(e)
 		return
 	}
-	newNode := &LinkNode{key: key, value: value}
-	if this.size == 0 {
-		this.head, this.tail = newNode, newNode
-	} else if this.size < this.capacity {
-		newNode.prev, this.tail.next = this.tail, newNode
-		this.tail = newNode
-		this.size++
-	} else {
-		head, next := this.head, this.head.next
-		delete(this.dict, head.key)
-		if next == nil {
-			this.head, this.tail = newNode, newNode
-		} else {
-			head.next, next.prev = nil, nil
-			this.head = next
-		}
-		newNode.prev, this.tail.next = this.tail, newNode
-		this.tail = newNode
-		this.size++
+	if this.capacity == this.size {
+		e = this.list.Back()
+		node, _ := e.Value.(*Node)
+		delete(this.dict, node.Key)
+		this.list.Remove(e)
+		this.size--
 	}
-	this.dict[key] = newNode
+	e = this.list.PushFront(&Node{key, value})
+	this.dict[key] = e
+	this.size++
 }
