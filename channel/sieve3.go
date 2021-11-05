@@ -4,43 +4,49 @@ import (
 )
 
 func main() {
-	primes := sieve()
+	primes := sieve(100)
 	for prime := range primes {
 		fmt.Print(prime, " ")
 	}
 }
 
-func generate() chan int {
+func generate(size int) chan int {
 	ch := make(chan int)
 	go func() {
-		for i := 2; ; i++ {
+		for i := 2; i < size; i++ {
 			ch <- i
 		}
+		close(ch)
 	}()
 	return ch
 }
 
 func filter(in chan int, prime int) chan int {
-	out := make(chan int)
+	ch := make(chan int)
 	go func() {
-		for {
-			if i := <- in; i%prime != 0{
-				out <- i
+		for i := range in {
+			if i % prime != 0 {
+				ch <- i
 			}
 		}
+		close(ch)
 	}()
-	return out
+	return ch
 }
 
-func sieve() chan int {
+func sieve(size int) chan int {
 	primes := make(chan int)
 	go func() {
-		ch := generate()
+		ch := generate(size)
 		for {
-			prime := <- ch
+			prime, ok := <- ch
+			if !ok {
+				break
+			}
 			ch = filter(ch, prime)
 			primes <- prime
 		}
+		close(primes)
 	}()
 	return primes
 }
