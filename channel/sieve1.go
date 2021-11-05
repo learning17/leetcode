@@ -11,6 +11,7 @@ func main() {
 	go func() {
 		http.ListenAndServe(":8080", nil)
 	}()
+	// 2 过滤——>3 过滤...
 	for {
 		prime := <- ch
 		fmt.Print(prime,  " ")
