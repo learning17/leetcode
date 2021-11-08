@@ -2,34 +2,46 @@ package main
 import (
 	"fmt"
 	"testing"
+	"bytes"
+	"strings"
 )
 
 func main() {
-	fmt.Println(testing.Benchmark(BenchmarkChannelSync).String())
-	fmt.Println(testing.Benchmark(BenchmarkChannelBuffer).String())
+	fmt.Println("Buffer:", testing.Benchmark(benchMarkAddStringWithBuffer).String())
+	fmt.Println("Op:", testing.Benchmark(benchMarkAddStringWithOp).String())
+	fmt.Println("Sprintf:", testing.Benchmark(benchMarkAddStringWithSprint).String())
+	fmt.Println("Join:", testing.Benchmark(benchMarkAddStringWithJoin).String())
 }
 
-func BenchmarkChannelSync(b *testing.B) {
-	ch := make(chan int)
-	go func() {
-		for i := 0; i < b.N; i++ {
-			ch <- i
-		}
-		close(ch)
-	}()
-	for range ch {
+func benchMarkAddStringWithBuffer(b *testing.B) {
+	hello, world := "hello", "world"
+	for i := 0; i < b.N; i++ {
+		var buffer bytes.Buffer
+		buffer.WriteString(hello)
+		buffer.WriteString(world)
+		_ = buffer.String()
+	}
+}
+
+func benchMarkAddStringWithOp(b *testing.B) {
+	hello, world := "hello", "world"
+	for i := 0; i < b.N; i++ {
+		_ = hello + world 
 	}
 }
 
 
-func BenchmarkChannelBuffer(b *testing.B) {
-	ch := make(chan int,100)
-	go func() {
-		for i := 0; i < b.N; i++ {
-			ch <- i
-		}
-		close(ch)
-	}()
-	for range ch {
+func benchMarkAddStringWithSprint(b *testing.B) {
+	hello, world := "hello", "world"
+	for i := 0; i < b.N; i++ {
+		_ = fmt.Sprintf("%s%s", hello, world)
+	}
+}
+
+
+func benchMarkAddStringWithJoin(b *testing.B) {
+	hello, world := "hello", "world"
+	for i := 0; i < b.N; i++ {
+		_ = strings.Join([]string{hello, world},"")
 	}
 }
