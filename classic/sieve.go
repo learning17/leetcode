@@ -1,4 +1,5 @@
 package main
+// 素数
 import (
 	"fmt"
 )
