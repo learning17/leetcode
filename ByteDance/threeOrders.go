@@ -1,4 +1,5 @@
 package main
+// https://www.nowcoder.com/practice/a9fec6c46a684ad5a3abd4e365a9d362
 
 type TreeNode struct {
 	Val int
@@ -11,38 +12,39 @@ func threeOrders( root *TreeNode ) [][]int {
 }
 
 func preorderTraversal(root *TreeNode) []int {
-	res, stack := []int{}, []*TreeNode{}
+	var stack []*TreeNode
+	var res []int
 	for root != nil || len(stack) > 0 {
 		for root != nil {
 			res = append(res, root.Val)
 			stack = append(stack, root)
 			root = root.Left
 		}
-		root = stack[len(stack)-1]
+		root = stack[len(stack)-1].Right
 		stack = stack[:len(stack)-1]
-		root = root.Right
-
 	}
 	return res
 }
 
 func inorderTraversal(root *TreeNode) []int {
-	res, stack := []int{}, []*TreeNode{}
+	var stack []*TreeNode
+	var res []int
 	for root != nil || len(stack) > 0 {
 		for root != nil {
 			stack = append(stack, root)
 			root = root.Left
 		}
 		root = stack[len(stack)-1]
-		res = append(res, root.Val)
 		stack = stack[:len(stack)-1]
+		res = append(res, root.Val)
 		root = root.Right
 	}
 	return res
 }
 
 func postorderTraversal(root *TreeNode) []int {
-	res, stack := []int{}, []*TreeNode{}
+	var stack []*TreeNode
+	var res []int
 	var pre *TreeNode
 	for root != nil || len(stack) > 0 {
 		for root != nil {
@@ -53,8 +55,7 @@ func postorderTraversal(root *TreeNode) []int {
 		stack = stack[:len(stack)-1]
 		if root.Right == nil || root.Right == pre {
 			res = append(res, root.Val)
-			pre = root
-			root = nil
+			pre, root = root, nil
 		} else {
 			stack = append(stack, root)
 			root = root.Right
