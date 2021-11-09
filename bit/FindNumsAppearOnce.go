@@ -6,7 +6,7 @@ func FindNumsAppearOnce( array []int ) []int {
 	for _, num := range array {
 		bit ^= num
 	}
-	bit &=-bit
+	bit &=-bit // 最后1的位置
 	for _, num := range array {
 		if num & bit == 0 {
 			a ^= num
