@@ -25,6 +25,7 @@ func equationsPossible(equations []string) bool {
 	return true
 }
 
+
 type UF struct {
 	count int
 	parent []int
