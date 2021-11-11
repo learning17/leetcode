@@ -1,5 +1,6 @@
 package main
 // https://leetcode-cn.com/tag/union-find/problemset/
+//https://mp.weixin.qq.com/s/gUwLfi25TYamq8AJVIopfA
 
 type UF struct {
 	count int
