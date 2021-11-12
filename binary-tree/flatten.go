@@ -8,25 +8,43 @@ type TreeNode struct {
 }
 
 func flatten(root *TreeNode)  {
-	stack := []*TreeNode{}
-	list := []*TreeNode{}
+	flattenRecursion(root) // 递归
+	flattenNoRecursion(root) // 非递归
+}
+
+func flattenRecursion(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	flattenRecursion(root.Left)
+	flattenRecursion(root.Right)
+	left, right := root.Left, root.Right
+	root.Left, root.Right = nil, left
+	for root.Right != nil {
+		root = root.Right
+	}
+	root.Right = right
+}
+
+func flattenNoRecursion(root *TreeNode) {
+	if root == nil {
+		return
+	}
+	var stack []*TreeNode
+	var list []*TreeNode
 	for root != nil || len(stack) > 0 {
 		for root != nil {
-			list = append(list, root)
 			stack = append(stack, root)
+			list = append(list, root)
 			root = root.Left
 		}
 		root = stack[len(stack)-1].Right
 		stack = stack[:len(stack)-1]
 	}
-	var pre *TreeNode
-	for _, node := range list {
-		if pre == nil {
-			pre = node
-			root = node
-		} else {
-			pre.Right, pre.Left = node, nil
-			pre = pre.Right
+	for i := 0; i < len(list); i++ {
+		list[i].Left, list[i].Right = nil, nil
+		if i > 0 {
+			list[i-1].Right = list[i]
 		}
 	}
 }
