@@ -13,10 +13,7 @@ func generateTrees(n int) []*TreeNode {
 	help = func(start, end int) []*TreeNode {
 		var res []*TreeNode
 		if start > end {
-			return res
-		}
-		if start == end {
-			res = append(res, &TreeNode{start, nil, nil})
+			res = append(res, nil)
 			return res
 		}
 		for i := start; i <= end; i++ {
@@ -28,18 +25,6 @@ func generateTrees(n int) []*TreeNode {
 					res = append(res, node)
 				}
 			} 
-			if len(leftNodes) == 0 {
-				for _, right := range rightNodes {
-					node := &TreeNode{i, nil, right}
-					res = append(res, node)
-				}
-			}
-			if len(rightNodes) == 0 {
-				for _, left := range leftNodes {
-					node := &TreeNode{i, left, nil}
-					res = append(res, node)
-				}
-			}
 		}
 		return res
 	}
