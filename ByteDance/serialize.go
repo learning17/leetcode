@@ -14,24 +14,18 @@ func Serialize( root *TreeNode ) string {
 	if root == nil {
 		return ""
 	}
-	queue := [][]*TreeNode{[]*TreeNode{root}}
 	var arr []string
+	queue := []*TreeNode{root}
 	for len(queue) > 0 {
-		nodes := queue[0]
+		node := queue[0]
 		queue = queue[1:]
-		var tmpNodes []*TreeNode
-		for _,node := range nodes {
-			if node == nil {
-				arr = append(arr, "#")
-				continue
-			}
-			arr = append(arr, strconv.Itoa(node.Val))
-			tmpNodes = append(tmpNodes, node.Left)
-			tmpNodes = append(tmpNodes, node.Right)
+		if node == nil {
+			arr = append(arr, "#")
+			continue
 		}
-		if len(tmpNodes) > 0 {
-			queue = append(queue, tmpNodes)
-		}
+		arr = append(arr, strconv.Itoa(node.Val))
+		queue = append(queue, node.Left)
+		queue = append(queue, node.Right)
 	}
 	return strings.Join(arr, ",")
 }
@@ -40,22 +34,25 @@ func Deserialize( s string ) *TreeNode {
 	if len(s) == 0 {
 		return nil
 	}
+	buildNode := func(c string) *TreeNode {
+		value, _ := strconv.Atoi(c)
+		return &TreeNode{value, nil, nil}
+	}
 	arr := strings.Split(s, ",")
-	val, _ := strconv.Atoi(arr[0])
-	root := &TreeNode{Val: val}
+	root := buildNode(arr[0]) 
 	queue := []*TreeNode{root}
-	size := len(arr)
-	for i := 1; len(queue) > 0 && i < size; i = i+2 {
+	var pos int
+	for len(queue) > 0 {
 		node := queue[0]
 		queue = queue[1:]
-		if arr[i] != "#" {
-			val, _ := strconv.Atoi(arr[i])
-			node.Left = &TreeNode{Val: val}
+		pos++
+		if arr[pos] != "#" {
+			node.Left = buildNode(arr[pos])
 			queue = append(queue, node.Left)
 		}
-		if i + 1 < size && arr[i+1] != "#" {
-			val, _ := strconv.Atoi(arr[i+1])
-			node.Right = &TreeNode{Val: val}
+		pos++
+		if arr[pos] != "#" {
+			node.Right = buildNode(arr[pos])
 			queue = append(queue, node.Right)
 		}
 	}
