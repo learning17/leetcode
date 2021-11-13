@@ -20,6 +20,20 @@ func isValidBST(root *TreeNode) bool {
 	return true
 }
 
+func checkValid(root, min, max *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	if min != nil && root.Val <= min.Val {
+		return false
+	}
+	if max != nil && root.Val >= max.Val {
+		return false
+	}
+	return checkValid(root.Left, min, root) && checkValid(root.Right, root, max)
+}
+
+
 func checkLeft(node *TreeNode, val int) bool {
 	if node == nil {
 		return true
