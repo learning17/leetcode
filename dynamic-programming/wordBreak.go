@@ -7,19 +7,18 @@ func wordBreak(s string, wordDict []string) bool {
 		return true
 	}
 	dict := make(map[string]int)
-	for _, word := range wordDict {
+	for _,word := range wordDict {
 		dict[word] = len(word)
 	}
 	dp := make([]bool, size+1)
 	dp[0] = true
-
 	for i := 1; i < size+1; i++ {
-		for _,word := range wordDict {
-			if dict[word] > i {
+		for word, wordSize := range dict {
+			if wordSize > i {
 				continue
 			}
-			if word == s[i-dict[word]:i] {
-				dp[i] = dp[i] || dp[i-dict[word]]
+			if word == s[i-wordSize:i] {
+				dp[i] = dp[i] || dp[i-wordSize]
 			}
 		}
 	}
