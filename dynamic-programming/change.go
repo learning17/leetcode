@@ -11,7 +11,7 @@ func change(amount int, coins []int) int {
 		dp[i] = make([]int, amount+1)
 		dp[i][0] = 1
 	}
-	dp[0][0] = 0
+
 	for i := 1; i < size+1; i++ {
 		for j := 1; j < amount+1; j++ {
 			if j < coins[i-1] {
