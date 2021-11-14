@@ -8,39 +8,33 @@ func lengthOfLIS(nums []int) int {
 	if size < 2 {
 		return size
 	}
-	ends := make([]int, size+1)
-	for i := 0; i < size+1; i++ {
-		ends[i] = math.MaxInt64
+	arr := make([]int, size)
+	for i := 0; i < size; i++ {
+		arr[i] = math.MaxInt64
 	}
-	ends[0], ends[1] = 0, nums[0]
-	maxSize := 1
-	for i := 1; i < size; i++ {
-		pos := findBinary(ends, nums[i])
-		if ends[pos+1] > nums[i] {
-			ends[pos+1] = nums[i]
-		}
+	var maxSize int
+	for i := 0; i < size; i++ {
+		pos := searchLeft(arr, nums[i])
+		arr[pos] = nums[i]
 		if pos+1 > maxSize {
-			maxSize = pos+1
+			maxSize = pos + 1
 		}
 	}
 	return maxSize
 }
 
-func findBinary(nums []int, target int) int {
-	left, right := 0, len(nums)-1
-	for {
-		if left >= right {
-			return left
-		}
-		mid := left + (right-left+1)/2
-		if nums[mid] >= target {
-			right = mid-1
+func searchLeft(arr []int, target int) int {
+	left, right := 0, len(arr)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if arr[mid] >= target {
+			right = mid - 1
 		} else {
-			left = mid
+			left = mid + 1
 		}
 	}
+	return left
 }
-
 
 /*func lengthOfLIS(nums []int) int {
 	size := len(nums)
