@@ -10,32 +10,30 @@ func sortList(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return head
 	}
-	pre, fast, slow := head,head, head
-	for;slow != nil && fast != nil && fast.Next != nil; {
+	pre, slow, fast := head, head, head
+	for slow != nil && fast != nil && fast.Next != nil {
 		pre, slow, fast = slow, slow.Next, fast.Next.Next
 	}
 	pre.Next = nil
 	return merge(sortList(head), sortList(slow))
 }
 
-func merge(left, right *ListNode) *ListNode {
+func merge(root1, root2 *ListNode) *ListNode {
 	root := &ListNode{}
-	p := root
-	for ;left != nil && right != nil; {
-		if left.Val < right.Val {
-			p.Next, left = left, left.Next
+	node := root
+	for ;root1 != nil && root2 != nil; node = node.Next {
+		if root1.Val < root2.Val {
+			node.Next, root1 = root1, root1.Next
 		} else {
-			p.Next, right = right, right.Next
+			node.Next, root2 = root2, root2.Next
 		}
-		p = p.Next
 	}
-	if left != nil {
-		p.Next = left 
+	if root1 != nil {
+		node.Next = root1
 	}
-	if right != nil {
-		p.Next = right
+	if root2 != nil {
+		node.Next = root2
 	}
 	return root.Next
 }
-
 
