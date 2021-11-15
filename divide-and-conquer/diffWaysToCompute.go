@@ -1,27 +1,30 @@
 package main
-import "strconv"
+import (
+	"strconv"
+	"unicode"
+)
 // https://leetcode-cn.com/problems/different-ways-to-add-parentheses/
 
 func diffWaysToCompute(expression string) []int {
-	if intV, err := strconv.Atoi(expression); err == nil {
-		return []int{intV}
+	if v, err := strconv.Atoi(expression); err == nil {
+		return []int{v}
 	}
-	res := []int{}
-	for i, e := range expression {
-		if e == '+' || e == '-' || e == '*' {
-			left  := diffWaysToCompute(expression[:i])
-			right := diffWaysToCompute(expression[i+1:])
-			for _,l := range left {
-				for _, r := range right {
-					tmpRes := 0
-					if e == '+' {
-						tmpRes = l + r
-					} else if e == '-' {
-						tmpRes = l - r
-					} else {
-						tmpRes = l * r
-					}
-					res = append(res, tmpRes)
+	var res []int
+	for i := 0; i < len(expression); i++ {
+		if unicode.IsDigit(rune(expression[i])) {
+			continue
+		}
+		left := diffWaysToCompute(expression[:i])
+		right := diffWaysToCompute(expression[i+1:])
+		for _,l := range left {
+			for _,r := range right {
+				switch expression[i] {
+				case '+':
+					res = append(res, l+r)
+				case '-':
+					res = append(res, l-r)
+				case '*':
+					res = append(res, l*r)
 				}
 			}
 		}
