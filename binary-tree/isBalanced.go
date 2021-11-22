@@ -1,34 +1,41 @@
 package main
-// https://leetcode-cn.com/problems/balanced-binary-tree/
+// https://leetcode-cn.com/problems/ping-heng-er-cha-shu-lcof/
+// 平衡二叉树
 
 type TreeNode struct {
 	Val int
 	Left *TreeNode
 	Right *TreeNode
 }
-
 func isBalanced(root *TreeNode) bool {
-	return helper(root) != -1
+	if root == nil {
+		return true
+	}
+	if abs(height(root.Left) - height(root.Right)) > 1 {
+		return false
+	}
+	return isBalanced(root.Left) && isBalanced(root.Right)
 }
 
-func helper(root *TreeNode) int {
+func height(root *TreeNode) int {
 	if root == nil {
 		return 0
 	}
-	left  := helper(root.Left)
-	right := helper(root.Right)
-	if left == -1 || right == -1 || abs(left - right) > 1 {
-		return -1
-	}
-	if left > right {
-		return left+1
-	}
-	return right+1
+	left := height(root.Left)
+	right := height(root.Right)
+	return max(left, right) + 1
 }
 
-func abs(value int) int {
-	if value < 0 {
-		value = -value
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-	return value
+	return b
+}
+
+func abs(a int) int {
+	if a < 0 {
+		return -a
+	}
+	return a
 }
