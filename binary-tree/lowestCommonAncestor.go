@@ -1,6 +1,6 @@
 package main
-// https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/
-
+// https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/
+// 二叉树的最近公共祖先
 type TreeNode struct {
 	Val int
 	Left *TreeNode
@@ -13,11 +13,12 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	}
 	left := lowestCommonAncestor(root.Left, p, q)
 	right := lowestCommonAncestor(root.Right, p, q)
-	if left == nil {
-		return right
+	if left != nil && right != nil {
+		return root
 	}
-	if right == nil {
+	if left != nil {
 		return left
 	}
-	return root
+	return right
 }
+
