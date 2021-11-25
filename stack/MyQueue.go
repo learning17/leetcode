@@ -1,4 +1,6 @@
 package main
+// https://leetcode-cn.com/problems/implement-queue-using-stacks/
+// 用栈实现队列
 
 type MyQueue struct {
 	stack1 []int
