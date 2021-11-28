@@ -9,14 +9,10 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	var num int
 	var tmp []int
 	for i := 0; i < len(intervals); i++ {
-		if i == 0 {
+		if i == 0 || tmp[1] <= intervals[i][0] {
 			tmp = intervals[i]
-			continue
-		}
-		if intervals[i][0] < tmp[1] {
-			num++
 		} else {
-			tmp = intervals[i]
+			num++
 		}
 	}
 	return num
