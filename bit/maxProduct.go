@@ -1,37 +1,40 @@
 package main
 // https://leetcode-cn.com/problems/aseY1I/
+// 单词长度的最大乘积
 
 func maxProduct(words []string) int {
 	size := len(words)
 	if size < 2 {
 		return 0
 	}
-	var wordsInt []int
-	dict := make(map[string]int)
+	dict := make(map[string][]int)
 	for _, word := range words {
-		wordsInt = append(wordsInt, wordToInt(word))
-		dict[word] = len(word)
+		dict[word] = []int{wordToInt(word), len(word)}
 	}
-	maxValue := 0
+	var maxSize int
 	for i := 0; i < size; i++ {
 		for j := i+1; j < size; j++ {
-			if wordsInt[i] & wordsInt[j] != 0 {
+			if dict[words[i]][0] & dict[words[j]][0] != 0{
 				continue
 			}
-			tmp := dict[words[i]] * dict[words[j]]
-			if tmp > maxValue {
-				maxValue = tmp
-			}
+			maxSize = max(maxSize, dict[words[i]][1] * dict[words[j]][1]) 
 		}
 	}
-	return maxValue
+	return maxSize
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 func wordToInt(word string) int {
-	ans := 0
+	var ans int
 	for _,c := range word {
-		pos := c - 'a'
-		ans |= (1 << pos)
+		ans |= (1 << int(c-'a'))
 	}
 	return ans
 }
+
