@@ -24,20 +24,28 @@ func Handle(ctx context.Context, items []int) {
 	}()
 	var i, last int
 	wg := &sync.WaitGroup{}
+	ch := make(chan []int)
 	for i = 1; i <= len(items); i++ {
 		if i % 50 == 0 {
 			wg.Add(1)
 			last = i
-			go GetBatchItems(ctx, wg, items[i-50:i])
+			go GetBatchItems(ctx, wg, items[i-50:i], ch)
 		}
 	}
 	if last < len(items) {
 		wg.Add(1)
-		go GetBatchItems(ctx, wg, items[last:])
+		go GetBatchItems(ctx, wg, items[last:], ch)
 	}
-	wg.Wait()
+	go monitor(wg, ch)
+	for c := range ch {
+		fmt.Println(c)
+	}
 }
-func GetBatchItems(ctx context.Context, wg *sync.WaitGroup, items []int) {
+func monitor(wg *sync.WaitGroup, ch chan []int) {
+	wg.Wait()
+	close(ch)
+}
+func GetBatchItems(ctx context.Context, wg *sync.WaitGroup, items []int, ch chan []int) {
 	defer wg.Done()
 	for {
 		select {
@@ -45,10 +53,11 @@ func GetBatchItems(ctx context.Context, wg *sync.WaitGroup, items []int) {
 			fmt.Println("time out")
 			return
 		default:
-			_, err := RcpAction(items)
+			res, err := RcpAction(items)
 			if err != nil {
 				panic(err)
 			}
+			ch <- res
 			return
 		}
 	}
