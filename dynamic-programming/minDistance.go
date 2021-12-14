@@ -3,6 +3,8 @@ package main
 // https://leetcode-cn.com/problems/edit-distance/
 /* 编辑距离
 给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数
+dp[i][j] = dp[i-1][j-1] if word1[i] == word2[j]
+dp[i][j] = min(dp[i][j-1], dp[i-1][j], dp[i-1][j-1]) + 1
 */
 
 func minDistance(word1 string, word2 string) int {
