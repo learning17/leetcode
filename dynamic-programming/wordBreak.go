@@ -1,5 +1,10 @@
 package main
 // https://leetcode-cn.com/problems/word-break/
+/*
+单词拆分
+给你一个字符串 s 和一个字符串列表 wordDict 作为字典，
+判定 s 是否可以由空格拆分为一个或多个在字典中出现的单词
+*/
 
 func wordBreak(s string, wordDict []string) bool {
 	size := len(s)
