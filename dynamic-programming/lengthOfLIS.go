@@ -1,6 +1,9 @@
 package main
 // https://leetcode-cn.com/problems/longest-increasing-subsequence/
-
+/*
+最长递增子序列
+给你一个整数数组 nums ，找到其中最长严格递增子序列的长度
+*/
 import "math"
 
 func lengthOfLIS(nums []int) int {
