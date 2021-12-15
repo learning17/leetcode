@@ -1,5 +1,9 @@
 package main
 // https://leetcode-cn.com/problems/longest-palindromic-subsequence/
+/*
+最长回文子序列
+给你一个字符串 s ，找出其中最长的回文子序列，并返回该序列的长度
+*/
 
 func longestPalindromeSubseq(s string) int {
 	size := len(s)
