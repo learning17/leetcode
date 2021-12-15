@@ -1,6 +1,11 @@
 package main
 import "sort"
 // https://leetcode-cn.com/problems/russian-doll-envelopes/
+/*
+俄罗斯套娃信封问题
+当另一个信封的宽度和高度都比这个信封大的时候，这个信封就可以放进另一个信封里，如同俄罗斯套娃一样
+请计算 最多能有多少个 信封能组成一组“俄罗斯套娃”信封
+*/
 
 func maxEnvelopes(envelopes [][]int) int {
 	size := len(envelopes)
