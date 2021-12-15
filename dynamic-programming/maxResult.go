@@ -1,7 +1,12 @@
 package main
 
 // https://leetcode-cn.com/problems/jump-game-vi/
-
+/*
+跳跃游戏 VI
+开始你在下标 0 处
+最多可以往前跳 k 步
+目标是到达数组最后一个位置,得分 为经过的所有数字之和,你能得到的 最大得分
+*/
 import (
 	"math"
 )
