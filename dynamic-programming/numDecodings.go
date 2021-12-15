@@ -1,5 +1,14 @@
 package main
 // https://leetcode-cn.com/problems/decode-ways/
+/*
+解码方法
+一条包含字母 A-Z 的消息通过以下映射进行了 编码
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+给你一个只含数字的 非空 字符串 s ，请计算并返回 解码 方法的 总数
+*/
 import (
 	"strconv"
 )
