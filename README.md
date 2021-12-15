@@ -8,7 +8,7 @@
 #### 1.7 [跳跃游戏 II](https://github.com/learning17/leetcode/blob/master/dynamic-programming/jump.go)
 #### 1.8 [跳跃游戏 VI](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxResult.go)
 #### 1.9 [跳跃游戏 VII](https://github.com/learning17/leetcode/blob/master/dynamic-programming/canReach.go)
-#### 1.10 [01 背包:一和零](https://leetcode-cn.com/problems/ones-and-zeroes/)
+#### 1.10 [01 背包:一和零](https://github.com/learning17/leetcode/blob/master/dynamic-programming/findMaxForm.go)
 #### 1.11 [完全背包:零钱兑换 II](https://github.com/learning17/leetcode/blob/master/dynamic-programming/change.go)
 #### 1.12 [子集背包:分割等和子集](https://github.com/learning17/leetcode/blob/master/dynamic-programming/canPartition.go)
 #### 1.13 [编辑距离](https://github.com/learning17/leetcode/blob/master/dynamic-programming/minDistance.go)
