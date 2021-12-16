@@ -1,6 +1,9 @@
 package main
 // https://leetcode-cn.com/problems/binary-tree-postorder-traversal/
-// 根——右——左，然后反转得到 左——右——根
+/*
+二叉树的后序非递归遍历
+按照访问左子树——右子树——根节点的方式遍历这棵树
+*/
 type TreeNode struct {
 	Val int
 	Left *TreeNode
