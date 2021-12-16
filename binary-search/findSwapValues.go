@@ -1,6 +1,10 @@
 package main
 
 //https://leetcode-cn.com/problems/sum-swap-lcci/
+/*
+交换和
+给定两个整数数组，请交换一对数值（每个数组中取一个数值），使得两个数组所有元素的和相等
+*/
 
 import (
 	"sort"
