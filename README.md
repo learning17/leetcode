@@ -1,6 +1,6 @@
 ### 0、[经典面试题]
 #### 0.1 [二叉树的前序非递归遍历](https://github.com/learning17/leetcode/blob/master/classic/preorderTraversal.go)
-#### 0.2 [二叉树的中序非递归遍历](https://github.com/learning17/leetcode/blob/master/classic/inorderTraversal.goo)
+#### 0.2 [二叉树的中序非递归遍历](https://github.com/learning17/leetcode/blob/master/classic/inorderTraversal.go)
 #### 0.3 [二叉树的后序非递归遍历](https://github.com/learning17/leetcode/blob/master/classic/postorderTraversal.go)
 ### 一、[动态规划](https://github.com/learning17/leetcode/tree/master/dynamic-programming)
 #### 1.1 [买卖股票的最佳时机](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxProfit.go)
