@@ -23,7 +23,7 @@
 #### 0.22 [接雨水](https://github.com/learning17/leetcode/blob/master/classic/trap.go)
 #### 0.23 [丑数求解](https://github.com/learning17/leetcode/blob/master/classic/uglyNumber.go)
 #### 0.24 [素数](https://github.com/learning17/leetcode/blob/master/classic/sieve.go)
-
+#### 0.25 [实现 Trie (前缀树)](https://github.com/learning17/leetcode/blob/master/binary-tree/Trie.go)
 ### 一、[动态规划](https://github.com/learning17/leetcode/tree/master/dynamic-programming)
 #### 1.1 [买卖股票的最佳时机](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxProfit.go)
 #### 1.2 [买卖股票的最佳时机II](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxProfit_2.go)
@@ -55,3 +55,8 @@
 #### 2.6 [0～n-1中缺失的数字](https://github.com/learning17/leetcode/blob/master/binary-search/missingNumber.go)
 #### 2.7 [算术平方根](https://github.com/learning17/leetcode/blob/master/binary-search/mySqrt.go)
 ### 三、[二叉树](https://github.com/learning17/leetcode/tree/master/binary-tree)
+#### [路径总和 III](https://github.com/learning17/leetcode/blob/master/binary-tree/pathSum.go)
+#### [2叉搜索树中第K小的元素](https://github.com/learning17/leetcode/blob/master/binary-tree/kthSmallest.go)
+#### [二叉搜索树的第k大节点](https://github.com/learning17/leetcode/blob/master/binary-tree/kthLargest.go)
+#### [二叉树中和为某一值的路径](https://github.com/learning17/leetcode/blob/master/binary-tree/pathSum_1.go)
+
