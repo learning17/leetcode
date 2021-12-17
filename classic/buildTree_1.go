@@ -1,5 +1,8 @@
 package main
 // https://leetcode-cn.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
+/*
+从中序与后序遍历序列构造二叉树
+*/
 type TreeNode struct {
 	Val int
 	Left *TreeNode
@@ -11,17 +14,18 @@ func buildTree(inorder []int, postorder []int) *TreeNode {
 	for i := 0; i < len(inorder); i++ {
 		dict[inorder[i]] = i
 	}
-	return build(dict, inorder, postorder, 0, len(inorder)-1, 0, len(postorder)-1)
+	return build(dict, inorder, 0, len(inorder)-1, postorder, 0, len(postorder)-1)
 }
 
-func build(dict map[int]int, inorder, postorder []int, iLeft, iRight, pLeft, pRight int) *TreeNode {
+func build(dict map[int]int, inorder []int, iLeft, iRight int, postorder []int, pLeft, pRight int) *TreeNode {
 	if iLeft > iRight || pLeft > pRight {
 		return nil
 	}
-	root := &TreeNode{postorder[pRight], nil, nil}
 	pos := dict[postorder[pRight]]
-	leftSize := pos - iLeft
-	root.Left = build(dict, inorder, postorder, iLeft, pos-1, pLeft, pLeft+leftSize-1)
-	root.Right = build(dict, inorder, postorder, pos+1, iRight, pLeft+leftSize, pRight-1)
+	size := pos - iLeft
+	root := &TreeNode{postorder[pRight], nil, nil}
+	root.Left = build(dict, inorder, iLeft, pos-1, postorder, pLeft, pLeft+size-1)
+	root.Right = build(dict, inorder, pos+1, iRight, postorder, pLeft+size, pRight-1)
 	return root
 }
+
