@@ -1,6 +1,9 @@
 package main
 // https://leetcode-cn.com/problems/divide-two-integers/
 // https://www.cnblogs.com/stigerzergold/p/10328472.html
+/*
+位实现加乘除
+*/
 
 func divide(dividend int, divisor int) int {
 	if dividend == -(1 << 31) && divisor == -1 {
