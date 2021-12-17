@@ -15,11 +15,14 @@ func main() {
 }
 // WithValue
 func Value() {
-	ctx := context.Background()
-	ctx = context.WithValue(ctx, "Key", "Value")
-	GetValue(ctx)
+	ctx := context.WithValue(context.Background(), "Key", "Value")
+	wg := &sync.WaitGroup{}
+	wg.Add(1)
+	go GetValue(ctx, wg)
+	wg.Wait()
 }
-func GetValue(ctx context.Context) {
+func GetValue(ctx context.Context, wg *sync.WaitGroup) {
+	defer wg.Done()
 	value := ctx.Value("Key")
 	fmt.Println(value)
 }
