@@ -24,6 +24,7 @@
 #### 0.23 [丑数求解](https://github.com/learning17/leetcode/blob/master/classic/uglyNumber.go)
 #### 0.24 [素数](https://github.com/learning17/leetcode/blob/master/classic/sieve.go)
 #### 0.25 [实现 Trie (前缀树)](https://github.com/learning17/leetcode/blob/master/binary-tree/Trie.go)
+#### 0.26 [平滑负载均衡](https://github.com/learning17/leetcode/blob/master/smoothWrr.go)
 ### 一、[动态规划](https://github.com/learning17/leetcode/tree/master/dynamic-programming)
 #### 1.1 [买卖股票的最佳时机](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxProfit.go)
 #### 1.2 [买卖股票的最佳时机II](https://github.com/learning17/leetcode/blob/master/dynamic-programming/maxProfit_2.go)
