@@ -11,12 +11,16 @@ func main() {
 		return "", nil
 	}
 	var inter1 = func(ctx context.Context, req interface{}, handler UnaryHandler) (interface{}, error) {
-		fmt.Println("inter1")
-		return handler(ctx, req)
+		fmt.Println("inter1 before")
+		rsp, err := handler(ctx, req)
+		fmt.Println("inter1 after")
+		return rsp, err
 	}
 	var inter2 = func(ctx context.Context, req interface{}, handler UnaryHandler) (interface{}, error) {
-		fmt.Println("inter2")
-		return handler(ctx, req)
+		fmt.Println("inter2 before")
+		rsp, err := handler(ctx, req)
+		fmt.Println("inter2 after")
+		return rsp, err
 	}
 	interceptors := []UnaryServerInterceptor{inter1, inter2}
 	initInter := chainUnaryInterceptors(interceptors)
