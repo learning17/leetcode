@@ -1,41 +1,44 @@
 package main
+
 // https://leetcode-cn.com/problems/reverse-linked-list-ii/
 
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
 func reverseBetween(head *ListNode, left int, right int) *ListNode {
-	var root, leftP, rightP *ListNode
-	for i, node := 1, head; ; i++ {
-		if i == left - 1 {
-			leftP = node
-		}
-		if i == left {
-			root = node
-		}
-		if i == right {
-			node.Next, rightP = nil, node.Next
-			break
-		}
-		node = node.Next
+	var pre, subRoot *ListNode
+	node := head
+	for i := 1; i < left; i++ {
+		pre, node = node, node.Next
 	}
-	tmpHead, tmpTail := reverse(root)
-	if leftP != nil {
-		leftP.Next = tmpHead
+	subRoot = node
+
+	var subTail, next *ListNode
+	node = head
+	for i := 0; i < right; i++ {
+		subTail, node = node, node.Next
+	}
+	next = node
+	if pre != nil {
+		pre.Next = nil
+	}
+	subTail.Next = nil
+	subRoot, subTail = reverse(subRoot)
+	if pre != nil {
+		pre.Next = subRoot
 	} else {
-		head = tmpHead
+		head = subRoot
 	}
-	tmpTail.Next = rightP
+	subTail.Next = next
 	return head
 }
 
-func reverse(root *ListNode)(*ListNode, *ListNode) {
+func reverse(head *ListNode) (*ListNode, *ListNode) {
 	var pre, cur *ListNode
-	for pre, cur = nil,root; cur != nil ; {
+	for pre, cur = nil, head; cur != nil; {
 		pre, cur, cur.Next = cur, cur.Next, pre
 	}
-	return pre, root
+	return pre, head
 }
-
