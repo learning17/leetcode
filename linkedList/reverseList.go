@@ -1,16 +1,16 @@
 package main
 
+// 反转链表
 //https://leetcode-cn.com/problems/reverse-linked-list/
 
 type ListNode struct {
-	Val int
+	Val  int
 	Next *ListNode
 }
 
 func reverseList(head *ListNode) *ListNode {
-	var pre, cur *ListNode
-	pre, cur = nil, head
-	for ; cur != nil; {
+	var cur, pre *ListNode
+	for pre, cur = nil, head; cur != nil; {
 		pre, cur, cur.Next = cur, cur.Next, pre
 	}
 	return pre
