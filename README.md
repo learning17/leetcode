@@ -60,3 +60,4 @@
 #### [2叉搜索树中第K小的元素](https://github.com/learning17/leetcode/blob/master/binary-tree/kthSmallest.go)
 #### [二叉搜索树的第k大节点](https://github.com/learning17/leetcode/blob/master/binary-tree/kthLargest.go)
 #### [二叉树中和为某一值的路径](https://github.com/learning17/leetcode/blob/master/binary-tree/pathSum_1.go)
+#### [寻找重复数](https://github.com/learning17/leetcode/blob/master/classic/findDuplicate.go)
